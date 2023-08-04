@@ -1,4 +1,4 @@
-enum EntityType { PLATFORM, PLAYER, TRAP };
+enum EntityType { PLATFORM, PLAYER, TRAP, GOAL };
 
 class Entity
 {
@@ -54,6 +54,8 @@ public:
     bool m_collided_bottom = false;
     bool m_collided_left   = false;
     bool m_collided_right  = false;
+    bool m_asteriod_collided  = false;
+    bool m_player_landed = false;
 
     // ––––– METHODS ––––– //
     Entity();
@@ -78,6 +80,8 @@ public:
     int        const get_width()        const { return m_width;        };
     int        const get_height()       const { return m_height;       };
     EntityType const get_entity_type()  const { return m_type;         };
+    float      const get_speed()        const { return m_speed;        };
+    
     
     // ––––– SETTERS ––––– //
     void const set_position(glm::vec3 new_position)         { m_position = new_position;         };
@@ -87,4 +91,5 @@ public:
     void const set_width(float new_width)                   { m_width  = new_width;              };
     void const set_height(float new_height)                 { m_height = new_height;             };
     void const set_entity_type(EntityType new_type)         { m_type = new_type;                 };
+    void const set_speed(float new_speed)         { m_speed = new_speed;         };
 };

@@ -1,5 +1,6 @@
 #define GL_SILENCE_DEPRECATION
 #define STB_IMAGE_IMPLEMENTATION
+#define LOG(argument) std::cout << argument << '\n'
 
 #ifdef _WINDOWS
 #include <GL/glew.h>
@@ -135,9 +136,10 @@ void const Entity::check_collision_y(Entity *collidable_entities, int collidable
             {
                 // If it is, deactivate the entity we are colliding with
                 // and skip to the next entity
+                m_player_landed = true;
                 collidable_entity->deactivate();
-                continue;
             }
+            else {m_asteriod_collided = true;}
             
             float y_distance = fabs(m_position.y - collidable_entity->m_position.y);
             float y_overlap = fabs(y_distance - (m_height / 2.0f) - (collidable_entity->m_height / 2.0f));
@@ -163,6 +165,12 @@ void const Entity::check_collision_x(Entity *collidable_entities, int collidable
         
         if (check_collision(collidable_entity))
         {
+            if (collidable_entity->get_entity_type() == TRAP)
+            {
+                m_player_landed = true;
+                collidable_entity->deactivate();
+            }
+            else {m_asteriod_collided = true;}
             float x_distance = fabs(m_position.x - collidable_entity->m_position.x);
             float x_overlap = fabs(x_distance - (m_width / 2.0f) - (collidable_entity->m_width / 2.0f));
             if (m_velocity.x > 0) {
